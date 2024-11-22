@@ -1,0 +1,19 @@
+{
+  "name": "notion-calendar-integration",
+  "version": "1.0.0",
+  "description": "Integration of Notion calendar with Google Calendar",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/express/index.js",
+    "generate:ics": "node src/createFile/index.js"
+  },
+  "dependencies": {
+    "@notionhq/client": "^2.2.15",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "googleapis": "^144.0.0",
+    "ics": "^3.8.1",
+    "moment": "^2.30.1"
+  }
+}
