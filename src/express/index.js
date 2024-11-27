@@ -2,7 +2,7 @@ import express from 'express';
 import { updateICSFile, getCachedICS } from '../createFile/index.js';
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.get('/calendar.ics', (req, res) => {
   const cachedICS = getCachedICS();
@@ -17,7 +17,7 @@ app.get('/calendar.ics', (req, res) => {
 });
 
 app.listen(PORT, async () => {
-  console.log(`Сервер запущен на http://localhost:${PORT}`);
+  console.log(`Сервер запущен на http://yourdomain:${PORT}`);
 
   await updateICSFile();
 
