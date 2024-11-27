@@ -24,10 +24,19 @@ async function fetchNotionEvents() {
         const start = date.start.split('-').map(Number);
         const end = date.end.split('-').map(Number);
 
+        const adjustedEnd = new Date(end[0], end[1] - 1, end[2]);
+        adjustedEnd.setDate(adjustedEnd.getDate() + 1);
+
+        const correctedEnd = [
+          adjustedEnd.getFullYear(),
+          adjustedEnd.getMonth() + 1,
+          adjustedEnd.getDate(),
+        ];
+
         return {
           title: `${name} Отсутствие`,
           start,
-          end,
+          end: correctedEnd,
         };
       })
       .filter(Boolean);
