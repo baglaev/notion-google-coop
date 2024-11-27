@@ -21,22 +21,18 @@ async function fetchNotionEvents() {
 
         if (!date || !date.start || !date.end) return null;
 
-        const start = date.start.split('-').map(Number);
-        const end = date.end.split('-').map(Number);
+        // const start = date.start.split('-').map(Number);
+        // const end = date.end.split('-').map(Number);
 
-        const adjustedEnd = new Date(end[0], end[1] - 1, end[2]);
-        adjustedEnd.setDate(adjustedEnd.getDate() + 1);
-
-        const correctedEnd = [
-          adjustedEnd.getFullYear(),
-          adjustedEnd.getMonth() + 1,
-          adjustedEnd.getDate(),
-        ];
+        const start = [...date.start.split('-').map(Number), 0, 0, 0];
+        const endDate = new Date(date.end);
+        endDate.setDate(endDate.getDate() + 1);
+        const end = [endDate.getFullYear(), endDate.getMonth() + 1, endDate.getDate(), 0, 0, 0];
 
         return {
           title: `${name} Отсутствие`,
           start,
-          end: correctedEnd,
+          end,
         };
       })
       .filter(Boolean);
