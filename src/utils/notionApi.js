@@ -25,7 +25,8 @@ async function fetchNotionEvents() {
         // const end = date.end.split('-').map(Number);
 
         const endDate = new Date(date.end);
-        endDate.setDate(endDate.getDate() + 1);
+        // endDate.setDate(endDate.getDate() + 1);
+        endDate.setDate(endDate.getDate());
         const end = [endDate.getFullYear(), endDate.getMonth() + 1, endDate.getDate()];
 
         // console.log('Start date:', date.start);
