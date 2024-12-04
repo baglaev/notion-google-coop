@@ -11,8 +11,10 @@ app.get('/calendar.ics', (req, res) => {
     return res.status(500).send('Файл ICS еще не готов, попробуйте позже.');
   }
 
-  res.setHeader('Content-Disposition', 'attachment; filename="calendar.ics"');
-  res.setHeader('Content-Type', 'text/calendar');
+  // res.setHeader('Content-Disposition', 'attachment; filename="calendar.ics"');
+  // res.setHeader('Content-Type', 'text/calendar');
+  res.setHeader('Content-Disposition', 'inline; filename="calendar.ics"');
+  res.setHeader('Content-Type', 'text/calendar; charset=utf-8');
   res.send(cachedICS);
 });
 
