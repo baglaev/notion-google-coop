@@ -1,4 +1,5 @@
 import { Client } from '@notionhq/client';
+// import fs from 'fs';
 // import dotenv from 'dotenv';
 // dotenv.config();
 
@@ -14,25 +15,29 @@ async function fetchNotionEvents() {
   try {
     const response = await notion.databases.query({ database_id: databaseId });
 
+    // console.log('Данные от Notion:', JSON.stringify(response, null, 2));
+    // fs.writeFileSync('notionData.json', JSON.stringify(response, null, 2), 'utf-8');
+    // console.log('Данные от Notion сохранены в файл notionData.json');
+
     return response.results
       .map((page) => {
         const name = page.properties.person?.rollup?.array?.[0]?.people?.[0]?.name || 'Без имени';
         const date = page.properties['даты отсутствия']?.date;
 
-        if (!date || !date.start || !date.end) return null;
+        if (!date || !date.start) return null;
 
         const start = date.start.split('-').map(Number);
-        // const end = date.end.split('-').map(Number);
 
-        const endDate = new Date(date.end);
-        endDate.setDate(endDate.getDate() + 1);
-        // endDate.setDate(endDate.getDate());
-        const end = [endDate.getFullYear(), endDate.getMonth() + 1, endDate.getDate()];
-
-        // console.log('Start date:', date.start);
-        // console.log('End date:', date.end);
-
-        console.log(start, end);
+        let end;
+        if (date.end) {
+          const endDate = new Date(date.end);
+          endDate.setDate(endDate.getDate() + 1);
+          end = [endDate.getFullYear(), endDate.getMonth() + 1, endDate.getDate()];
+        } else {
+          const startDate = new Date(date.start);
+          startDate.setDate(startDate.getDate() + 1);
+          end = [startDate.getFullYear(), startDate.getMonth() + 1, startDate.getDate()];
+        }
 
         return {
           title: `${name} Отсутствие`,
